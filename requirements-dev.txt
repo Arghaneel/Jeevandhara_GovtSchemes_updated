@@ -1,0 +1,8 @@
+-r backend/requirements.txt
+
+# Tests
+pytest>=8.0
+
+# Browser (end-to-end) tests — after installing, also run:
+#   python -m playwright install chromium
+playwright>=1.45

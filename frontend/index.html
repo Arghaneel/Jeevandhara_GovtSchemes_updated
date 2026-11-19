@@ -3,111 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeevandhara - AI Powered Government Scheme Recommendation System</title>
+    <meta name="description" content="Find out which central government schemes you can get, in Hindi or English.">
+    <meta name="theme-color" content="#1E6A3A">
+    <title>Jeevandhara — find the government schemes you can get</title>
+    <link rel="preload" href="fonts/poppins-700.woff" as="font" type="font/woff" crossorigin>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-title-key="page.index">
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to main content</a>
 
-    <div class="split-layout">
-        
-        <!-- Left Side: Visual Farmer Graphic & Badges -->
-        <div class="split-left">
-            <div class="left-brand">
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <rect width="32" height="32" rx="9" fill="#1E6A3A"/>
+                    <path d="M16 25.5V15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M16 16.5c0-4.6-3.2-7.5-8.5-7.5 0 4.6 3.2 7.5 8.5 7.5z" fill="#E3A008"/>
+                    <path d="M16 14.5c0-3.9 2.7-6.5 7.5-6.5 0 3.9-2.7 6.5-7.5 6.5z" fill="#fff"/>
                 </svg>
-                Jeevandhara
-            </div>
-            
-            <div class="left-content">
-                <h1>Cultivating a Smarter Future for Farmers</h1>
-                <p>Jeevandhara leverages artificial intelligence to analyze your land size, crop choices, age, and income to match you with matching government benefits and subsidies.</p>
-                
-                <div class="left-features-list">
-                    <div class="left-feature-item">
-                        <div class="left-feature-icon">✓</div>
-                        <div class="left-feature-text">
-                            <h3>Instant Profiling</h3>
-                            <p>Enter your profile details to see all eligible agricultural programs.</p>
-                        </div>
-                    </div>
-                    <div class="left-feature-item">
-                        <div class="left-feature-icon">✓</div>
-                        <div class="left-feature-text">
-                            <h3>AI Farmer Assistant</h3>
-                            <p>Ask our bilingual smart chatbot any doubts about applications and benefits.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="left-footer">
-                Ministry of Agriculture Nodal Initiative &copy; 2026. All rights reserved.
+                <span>Jeevandhara</span>
+            </a>
+            <div class="header-actions">
+                <button class="lang-switch" id="lang-btn" type="button">हिंदी</button>
+                <button class="icon-btn" id="theme-btn" type="button" data-i18n-title="theme.toggle"></button>
+                <a class="btn btn-ghost btn-sm" href="login.html" data-i18n="nav.login">Log in</a>
             </div>
         </div>
-        
-        <!-- Right Side: SaaS CTAs & Core Features -->
-        <div class="split-right">
-            <!-- Theme Toggle & Help Header -->
-            <div class="right-header">
-                <div class="theme-toggle-container">
-                    <button class="theme-switch" id="theme-btn" aria-label="Toggle Theme">
-                        🌙
-                    </button>
-                </div>
-            </div>
-            
-            <div class="right-content">
-                <span class="logo-main">🌾</span>
-                <h2>Welcome to <span>Jeevandhara</span></h2>
-                <p class="subtitle">AI Powered Government Scheme Recommendation System for Farmers</p>
-                
-                <div class="landing-ctas">
-                    <a href="login.html" class="btn btn-primary">
-                        <span>Login to Dashboard</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="register.html" class="btn btn-secondary">Create Farmer Account</a>
-                </div>
-                
-                <!-- Features Grid Preview -->
-                <div class="features-preview">
-                    <h4>Core Platform Features</h4>
-                    <div class="features-grid">
-                        <div class="feature-mini-card">
-                            <h5>📜 Schemes Match</h5>
-                            <p>Personalized matches across 17+ schemes.</p>
-                        </div>
-                        <div class="feature-mini-card">
-                            <h5>🤖 AI Chatbot</h5>
-                            <p>Get answers in real time about eligibility.</p>
-                        </div>
-                        <div class="feature-mini-card">
-                            <h5>📊 Profile Score</h5>
-                            <p>Track benefits matched to your profile.</p>
-                        </div>
-                        <div class="feature-mini-card">
-                            <h5>🖥️ Modern Portal</h5>
-                            <p>Responsive access on mobile, tablet & PC.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Quick Links Footer -->
-            <div class="right-footer-links">
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-                <a href="#help">Help Center</a>
-                <a href="#privacy">Privacy Policy</a>
-            </div>
-        </div>
-        
-    </div>
+    </header>
 
-    <!-- Script to handle session checks and theme toggles -->
+    <main id="main">
+        <section class="container hero">
+            <div class="hero-copy">
+                <h1 data-i18n="index.h1">Find out which government schemes you can get.</h1>
+                <p class="lede" data-i18n="index.lede">Tell us your age, land and income. We check 17 central schemes, like PM-KISAN, Kisan Credit Card and crop insurance, and show why you qualify or not.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary btn-lg" href="register.html" id="hero-register" data-i18n="index.cta_register">Create a free account</a>
+                    <a class="btn btn-quiet btn-lg" href="login.html" data-i18n="index.cta_login">I already have an account</a>
+                </div>
+            </div>
+
+            <form class="panel quick-check" id="quick-check" aria-labelledby="qc-title" novalidate>
+                <h2 id="qc-title" data-i18n="qc.title">Try it now. No account needed.</h2>
+                <div class="qc-fields">
+                    <label class="field">
+                        <span data-i18n="field.age">Age</span>
+                        <input class="input" id="qc-age" type="number" inputmode="numeric" min="1" max="120" placeholder="35">
+                    </label>
+                    <label class="field">
+                        <span data-i18n="qc.land">Land (acres)</span>
+                        <input class="input" id="qc-land" type="number" inputmode="decimal" min="0" step="0.1" placeholder="2.5">
+                    </label>
+                    <label class="field">
+                        <span data-i18n="qc.income">Yearly income (₹)</span>
+                        <input class="input" id="qc-income" type="number" inputmode="numeric" min="0" step="1000" placeholder="80000">
+                    </label>
+                </div>
+                <div class="qc-result" id="qc-result" aria-live="polite">
+                    <p class="qc-empty" data-i18n="qc.empty">Fill in all three boxes to see your schemes.</p>
+                </div>
+            </form>
+        </section>
+
+        <section class="container steps" aria-labelledby="steps-title">
+            <h2 class="section-heading" id="steps-title" data-i18n="index.steps_title">How it works</h2>
+            <ol class="steps-list">
+                <li>
+                    <h3 data-i18n="index.s1_title">Tell us about your farm</h3>
+                    <p data-i18n="index.s1_text">Age, land, income and a few yes or no questions.</p>
+                </li>
+                <li>
+                    <h3 data-i18n="index.s2_title">See what you qualify for</h3>
+                    <p data-i18n="index.s2_text">Every scheme is marked Eligible, Check or Not eligible, with the reason.</p>
+                </li>
+                <li>
+                    <h3 data-i18n="index.s3_title">Collect documents and apply</h3>
+                    <p data-i18n="index.s3_text">Tick off documents as you gather them and track each application.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section class="container chat-demo" aria-labelledby="chat-demo-title">
+            <div class="chat-demo-copy">
+                <h2 class="section-heading" id="chat-demo-title" data-i18n="index.chat_title">Ask in Hindi or English</h2>
+                <p data-i18n="index.chat_text">Type or speak your question. The assistant answers from official scheme details, in your language, and can read the answer aloud.</p>
+            </div>
+            <div class="demo-thread" aria-label="Example conversation" lang="hi">
+                <p class="demo-bubble demo-bubble--user">मैं किन योजनाओं के लिए पात्र हूँ?</p>
+                <p class="demo-bubble demo-bubble--bot">आपकी प्रोफ़ाइल (आयु 34, आय ₹80,000, 2.5 एकड़) के अनुसार आप 17 में से 13 योजनाओं के पात्र हैं:
+• KCC — फसल की खेती और कृषि कार्यों के लिए आसान अल्पकालिक ऋण।
+• PMFBY — प्राकृतिक आपदाओं, कीटों और बीमारियों से फसल नुकसान पर आर्थिक सुरक्षा।
+• PM-KISAN — सभी भूमिधारक किसान परिवारों को हर साल ₹6,000 की सीधी आय सहायता।</p>
+                <p class="demo-bubble demo-bubble--user">आवेदन कैसे करें?</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-note" data-i18n="footer.note">Jeevandhara is an independent guide to central government schemes. It is not an official government website, so always confirm details on the scheme's official portal.</p>
+            <p data-i18n-html="footer.kcc">Kisan Call Centre: <a href="tel:18001801551">1800-180-1551</a> (free, 6 AM to 10 PM, every day)</p>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="help.html#about" data-i18n="nav.about">About</a>
+                <a href="help.html#help" data-i18n="nav.help">Help Center</a>
+                <a href="help.html#contact" data-i18n="nav.contact">Contact</a>
+                <a href="help.html#privacy" data-i18n="nav.privacy">Privacy Policy</a>
+            </nav>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="common.js"></script>
+    <script src="i18n.js"></script>
     <script src="index.js"></script>
 </body>
 </html>

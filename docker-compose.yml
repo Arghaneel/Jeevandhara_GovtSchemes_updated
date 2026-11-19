@@ -1,0 +1,34 @@
+# Jeevandhara with Docker Compose.
+#
+# Website + API only (chatbot answers from the scheme database):
+#     docker compose up --build
+#
+# With the Mistral AI model via Ollama as well:
+#     docker compose --profile ai up --build
+#     docker compose exec ollama ollama pull mistral     # first time only (~4 GB)
+#
+# Open http://localhost:8000/
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      JEEVANDHARA_DB: /data/jeevandhara.db
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: mistral
+    volumes:
+      - jeevandhara-data:/data
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    profiles: ["ai"]
+    volumes:
+      - ollama-models:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  jeevandhara-data:
+  ollama-models:

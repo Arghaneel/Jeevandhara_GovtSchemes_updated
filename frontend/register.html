@@ -3,166 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Registration - Jeevandhara</title>
+    <meta name="theme-color" content="#1E6A3A">
+    <title>Create your account - Jeevandhara</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-title-key="page.register">
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to main content</a>
 
-    <div class="split-layout">
-        
-        <!-- Left panel details -->
-        <div class="split-left">
-            <div class="left-brand">
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <rect width="32" height="32" rx="9" fill="#1E6A3A"/>
+                    <path d="M16 25.5V15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M16 16.5c0-4.6-3.2-7.5-8.5-7.5 0 4.6 3.2 7.5 8.5 7.5z" fill="#E3A008"/>
+                    <path d="M16 14.5c0-3.9 2.7-6.5 7.5-6.5 0 3.9-2.7 6.5-7.5 6.5z" fill="#fff"/>
                 </svg>
-                Jeevandhara
-            </div>
-            
-            <div class="left-content">
-                <h1>Join Jeevandhara Today</h1>
-                <p>Register your agricultural profile to unlock custom recommended programs, financial aid opportunities, and access our AI chatbot for immediate scheme assistance.</p>
-                
-                <div class="left-features-list">
-                    <div class="left-feature-item">
-                        <div class="left-feature-icon">👤</div>
-                        <div class="left-feature-text">
-                            <h3>Personalized Profiles</h3>
-                            <p>We analyze your details to map you directly to relevant subsidies.</p>
-                        </div>
-                    </div>
-                    <div class="left-feature-item">
-                        <div class="left-feature-icon">🛡️</div>
-                        <div class="left-feature-text">
-                            <h3>Secure and Confirmed</h3>
-                            <p>Your details are protected using standard encryption and database safety.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="left-footer">
-                Ministry of Agriculture Nodal Initiative &copy; 2026.
+                <span>Jeevandhara</span>
+            </a>
+            <div class="header-actions">
+                <button class="lang-switch" id="lang-btn" type="button">हिंदी</button>
+                <button class="icon-btn" id="theme-btn" type="button" data-i18n-title="theme.toggle"></button>
+                <a class="btn btn-ghost btn-sm" href="login.html" data-i18n="nav.login">Log in</a>
             </div>
         </div>
-        
-        <!-- Right panel form -->
-        <div class="split-right">
-            <div class="right-header">
-                <button class="theme-switch" id="theme-btn" aria-label="Toggle Theme">
-                    🌙
+    </header>
+
+    <main id="main" class="auth-main auth-main--wide">
+        <div class="panel auth-card success-panel" id="success-overlay" style="display: none;">
+            <div class="success-checkmark">
+                <svg viewBox="0 0 52 52" aria-hidden="true">
+                    <circle cx="26" cy="26" r="24"/>
+                    <path d="M15 27l7 7 15-15"/>
+                </svg>
+            </div>
+            <h1 data-i18n="register.success_title">Account created</h1>
+            <p class="muted" data-i18n="register.success_text">Taking you to the login page...</p>
+        </div>
+
+        <div class="panel auth-card" id="register-form-panel">
+            <h1 data-i18n="register.title">Create your account</h1>
+            <p class="muted" data-i18n="register.subtitle">It takes about two minutes. You can change these details later.</p>
+
+            <form id="register-form" onsubmit="event.preventDefault(); register();" novalidate>
+                <fieldset class="fieldset">
+                    <legend data-i18n="register.legend_you">About you</legend>
+                    <div class="grid-2">
+                        <div class="field">
+                            <label for="name" data-i18n="field.name">Full name</label>
+                            <input type="text" id="name" class="input" data-i18n-placeholder="ph.name" autocomplete="name" required>
+                        </div>
+                        <div class="field">
+                            <label for="age" data-i18n="field.age">Age</label>
+                            <input type="number" id="age" class="input" data-i18n-placeholder="ph.age" inputmode="numeric" min="1" max="120" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset">
+                    <legend data-i18n="register.legend_farm">Your farm</legend>
+                    <div class="grid-2">
+                        <div class="field">
+                            <label for="land_size" data-i18n="field.land">Land (acres)</label>
+                            <input type="number" id="land_size" class="input" data-i18n-placeholder="ph.land" inputmode="decimal" step="0.01" min="0" required>
+                        </div>
+                        <div class="field">
+                            <label for="income" data-i18n="field.income">Yearly income (₹)</label>
+                            <input type="number" id="income" class="input" data-i18n-placeholder="ph.income" inputmode="numeric" min="0" required>
+                        </div>
+                        <div class="field">
+                            <label for="state" data-i18n="field.state">State</label>
+                            <input type="text" id="state" class="input" list="state-list" data-i18n-placeholder="ph.state" autocomplete="address-level1" required>
+                        </div>
+                        <div class="field">
+                            <label for="district" data-i18n="field.district">District</label>
+                            <input type="text" id="district" class="input" data-i18n-placeholder="ph.district" autocomplete="address-level2" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="fieldset">
+                    <legend data-i18n="register.legend_login">Your login</legend>
+                    <div class="grid-2">
+                        <div class="field">
+                            <label for="username" data-i18n="field.username">Username</label>
+                            <input type="text" id="username" class="input" data-i18n-placeholder="ph.username_new" minlength="3" maxlength="50" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+                        </div>
+                        <div class="field">
+                            <label for="password" data-i18n="field.password">Password</label>
+                            <div class="input-with-action">
+                                <input type="password" id="password" class="input" data-i18n-placeholder="ph.password_new" minlength="6" maxlength="128" autocomplete="new-password" required>
+                                <button type="button" class="reveal-btn" data-reveal="password">Show</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <details class="fieldset more-questions" open>
+                    <summary data-i18n="q.title">A few more questions (optional)</summary>
+                    <p class="hint" data-i18n="q.hint">These confirm schemes like PM-KISAN, APY and Jan-Dhan. Choose “Not sure” if you don't know.</p>
+                    <div class="grid-2" id="reg-questions"></div>
+                </details>
+
+                <p id="msg" class="form-error" role="alert"></p>
+
+                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg btn-block">
+                    <span data-i18n="register.submit">Create account</span>
                 </button>
-            </div>
-            
-            <div class="right-content auth-container">
-                <!-- Success State Overlay (Hidden by Default) -->
-                <div id="success-overlay" style="display: none; text-align: center;">
-                    <div class="success-checkmark">
-                        <svg viewBox="0 0 52 52">
-                            <circle cx="26" cy="26" r="25" fill="none"/>
-                            <path d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                        </svg>
-                    </div>
-                    <h2 style="color: var(--primary); margin-bottom: 10px;">Registration Successful!</h2>
-                    <p class="subtitle">Welcome to the future of smart agriculture. Redirecting you to Login...</p>
-                </div>
+            </form>
 
-                <!-- Registration Form Panel -->
-                <div id="register-form-panel">
-                    <h2 class="auth-card-title">Create Account</h2>
-                    <p class="auth-card-sub">Please fill out your farming details to get matching benefits.</p>
-                    
-                    <form id="register-form" onsubmit="event.preventDefault(); register();">
-                        
-                        <!-- Row 1: Credentials -->
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <div class="input-container">
-                                <span class="input-icon">👤</span>
-                                <input type="text" id="username" class="form-control" placeholder="Choose a username" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <div class="input-container">
-                                <span class="input-icon">🔒</span>
-                                <input type="password" id="password" class="form-control" placeholder="Create a secure password" required>
-                            </div>
-                        </div>
-
-                        <!-- Row 2: Personal Info -->
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <div class="input-container">
-                                <span class="input-icon">📝</span>
-                                <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="age">Age</label>
-                            <div class="input-container">
-                                <span class="input-icon">🗓️</span>
-                                <input type="number" id="age" class="form-control" placeholder="Enter age (e.g. 35)" min="10" max="120" required>
-                            </div>
-                        </div>
-
-                        <!-- Row 3: Farming Stats -->
-                        <div class="form-group">
-                            <label for="income">Annual Income (₹)</label>
-                            <div class="input-container">
-                                <span class="input-icon">₹</span>
-                                <input type="number" id="income" class="form-control" placeholder="Annual income in Rupees" min="0" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="land_size">Land Size (Acres)</label>
-                            <div class="input-container">
-                                <span class="input-icon">🌾</span>
-                                <input type="number" id="land_size" class="form-control" placeholder="Total land holding in acres" step="0.01" min="0" required>
-                            </div>
-                        </div>
-
-                        <!-- Row 4: Geography -->
-                        <div class="form-group">
-                            <label for="state">State</label>
-                            <div class="input-container">
-                                <span class="input-icon">📍</span>
-                                <input type="text" id="state" class="form-control" placeholder="Enter state name" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="district">District</label>
-                            <div class="input-container">
-                                <span class="input-icon">🗺️</span>
-                                <input type="text" id="district" class="form-control" placeholder="Enter district name" required>
-                            </div>
-                        </div>
-
-                        <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                            <span>Register Farmer</span>
-                        </button>
-                    </form>
-                    
-                    <p class="auth-footer-text">Already have an account? <a href="login.html">Sign In</a></p>
-                    <div id="msg" style="color: var(--danger); text-align: center; margin-top: 15px; font-weight: 500;"></div>
-                </div>
-            </div>
-            
-            <div class="right-footer-links" style="left: 80px; right: 80px;">
-                <a href="index.html">← Back to Home</a>
-                <a href="#help">Help Support</a>
-            </div>
+            <p class="auth-switch" data-i18n-html="register.have_account">Already registered? <a href="login.html">Log in</a></p>
         </div>
-        
-    </div>
+    </main>
 
-    <!-- Toast container for notifications -->
+    <datalist id="state-list">
+        <option value="Andhra Pradesh"></option><option value="Arunachal Pradesh"></option><option value="Assam"></option>
+        <option value="Bihar"></option><option value="Chhattisgarh"></option><option value="Goa"></option>
+        <option value="Gujarat"></option><option value="Haryana"></option><option value="Himachal Pradesh"></option>
+        <option value="Jharkhand"></option><option value="Karnataka"></option><option value="Kerala"></option>
+        <option value="Madhya Pradesh"></option><option value="Maharashtra"></option><option value="Manipur"></option>
+        <option value="Meghalaya"></option><option value="Mizoram"></option><option value="Nagaland"></option>
+        <option value="Odisha"></option><option value="Punjab"></option><option value="Rajasthan"></option>
+        <option value="Sikkim"></option><option value="Tamil Nadu"></option><option value="Telangana"></option>
+        <option value="Tripura"></option><option value="Uttar Pradesh"></option><option value="Uttarakhand"></option>
+        <option value="West Bengal"></option><option value="Andaman and Nicobar Islands"></option><option value="Chandigarh"></option>
+        <option value="Dadra and Nagar Haveli and Daman and Diu"></option><option value="Delhi"></option>
+        <option value="Jammu and Kashmir"></option><option value="Ladakh"></option><option value="Lakshadweep"></option>
+        <option value="Puducherry"></option>
+    </datalist>
+
     <div class="toast-container" id="toast-container"></div>
 
+    <script src="common.js"></script>
+    <script src="i18n.js"></script>
     <script src="register.js"></script>
 </body>
 </html>

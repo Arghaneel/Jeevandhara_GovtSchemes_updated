@@ -3,183 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Jeevandhara</title>
+    <meta name="theme-color" content="#1E6A3A">
+    <title>Your schemes - Jeevandhara</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-title-key="page.dashboard">
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to main content</a>
 
-    <div class="dashboard-layout">
-        
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-brand">
-                <span style="font-size: 24px;">🌾</span>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="dashboard.html">
+                <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <rect width="32" height="32" rx="9" fill="#1E6A3A"/>
+                    <path d="M16 25.5V15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M16 16.5c0-4.6-3.2-7.5-8.5-7.5 0 4.6 3.2 7.5 8.5 7.5z" fill="#E3A008"/>
+                    <path d="M16 14.5c0-3.9 2.7-6.5 7.5-6.5 0 3.9-2.7 6.5-7.5 6.5z" fill="#fff"/>
+                </svg>
                 <span>Jeevandhara</span>
-            </div>
+            </a>
             <div class="header-actions">
-                <div class="theme-toggle-container">
-                    <button class="theme-switch" id="theme-btn" aria-label="Toggle Theme">
-                        🌙
-                    </button>
+                <button class="lang-switch" id="lang-btn" type="button">हिंदी</button>
+                <button class="icon-btn" id="theme-btn" type="button" data-i18n-title="theme.toggle"></button>
+                <span class="user-chip"><span class="avatar" id="header-avatar">F</span><span id="header-user-name">Farmer</span></span>
+                <button type="button" class="btn btn-ghost btn-sm" onclick="logout()" data-i18n="dash.logout">Log out</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="container dash">
+
+        <!-- Side column: who you are, what's left to answer, what you're applying for -->
+        <aside class="dash-side">
+            <section class="panel profile-card" aria-labelledby="farmer-title">
+                <div class="profile-head">
+                    <span class="avatar avatar-lg" id="profile-avatar">F</span>
+                    <h1 class="profile-greeting" id="farmer-title">Namaste</h1>
                 </div>
-                <div class="user-profile-widget">
-                    <div class="user-avatar" id="header-avatar">F</div>
-                    <span class="user-name" id="header-user-name">Loading...</span>
+                <dl class="profile-facts">
+                    <div><dt data-i18n="fact.age">Age</dt><dd id="farmer-age">-</dd></div>
+                    <div><dt data-i18n="fact.land">Land</dt><dd id="farmer-land">-</dd></div>
+                    <div><dt data-i18n="fact.income">Yearly income</dt><dd id="farmer-income">-</dd></div>
+                    <div><dt data-i18n="fact.place">Place</dt><dd id="farmer-place">-</dd></div>
+                </dl>
+                <button type="button" class="btn btn-quiet btn-block" onclick="openProfileModal()">
+                    <span data-icon="edit" data-icon-size="18"></span>
+                    <span data-i18n="dash.edit_profile">Edit profile</span>
+                </button>
+            </section>
+
+            <section class="panel prompt-card" id="profile-complete-banner" hidden>
+                <p id="profile-complete-text"></p>
+                <div class="progress" aria-hidden="true"><div class="progress-bar" id="profile-progress-bar"></div></div>
+                <p class="prompt-meta" id="profile-progress-text"></p>
+                <button type="button" class="btn btn-haldi btn-block" onclick="openProfileModal(true)" data-i18n="dash.complete_btn">Answer now</button>
+            </section>
+
+            <section class="panel apps-card" id="saved-section" aria-labelledby="saved-heading">
+                <h2 class="panel-title" id="saved-heading">
+                    <span data-i18n="saved.title">My applications</span>
+                    <span class="count" id="stat-saved-count">0</span>
+                </h2>
+                <div class="apps-list" id="saved-container">
+                    <div class="skeleton-row" style="margin: 0;"></div>
                 </div>
-                <button onclick="logout()" class="btn btn-danger" style="padding: 8px 16px; font-size: 13px;">
-                    Logout
+            </section>
+        </aside>
+
+        <!-- Main column: every scheme, sorted by status -->
+        <section class="panel list-panel" aria-labelledby="schemes-title">
+            <div class="list-head">
+                <h2 id="schemes-title" data-i18n="list.title">Your schemes</h2>
+                <label class="search">
+                    <span class="visually-hidden" data-i18n="list.search">Search</span>
+                    <span data-icon="search" data-icon-size="18"></span>
+                    <input type="search" class="input" id="search-schemes-input" data-i18n-placeholder="list.search" autocomplete="off">
+                </label>
+            </div>
+
+            <div class="tabs" role="tablist" aria-labelledby="schemes-title">
+                <button type="button" class="tab" role="tab" id="tab-eligible" data-filter="eligible" aria-selected="true" aria-controls="scheme-list">
+                    <span data-i18n="tab.eligible">Eligible</span><span class="tab-count" id="count-eligible">0</span>
+                </button>
+                <button type="button" class="tab" role="tab" id="tab-maybe" data-filter="maybe" aria-selected="false" aria-controls="scheme-list">
+                    <span data-i18n="tab.maybe">Check</span><span class="tab-count" id="count-maybe">0</span>
+                </button>
+                <button type="button" class="tab" role="tab" id="tab-not_eligible" data-filter="not_eligible" aria-selected="false" aria-controls="scheme-list">
+                    <span data-i18n="tab.not_eligible">Not eligible</span><span class="tab-count" id="count-not_eligible">0</span>
+                </button>
+                <button type="button" class="tab" role="tab" id="tab-all" data-filter="all" aria-selected="false" aria-controls="scheme-list">
+                    <span data-i18n="tab.all">All</span><span class="tab-count" id="count-all">0</span>
                 </button>
             </div>
-        </header>
 
-        <!-- Dashboard Grid Container -->
-        <main class="dashboard-content">
-            
-            <!-- Left Main Column -->
-            <div class="main-column">
-                
-                <!-- Welcome Section -->
-                <section class="welcome-banner">
-                    <h2>Welcome, <span id="farmer-title-name">Farmer</span>! 👨‍🌾</h2>
-                    <p>Here is your smart agriculture profile summary. Keep your information updated for the best government scheme matches.</p>
-                    
-                    <div class="farmer-details-grid">
-                        <div class="farmer-detail-item">
-                            <div class="label">Full Name</div>
-                            <div class="value" id="farmer-name">-</div>
-                        </div>
-                        <div class="farmer-detail-item">
-                            <div class="label">Age</div>
-                            <div class="value" id="farmer-age">-</div>
-                        </div>
-                        <div class="farmer-detail-item">
-                            <div class="label">Annual Income</div>
-                            <div class="value" id="farmer-income">-</div>
-                        </div>
-                        <div class="farmer-detail-item">
-                            <div class="label">Land Size</div>
-                            <div class="value" id="farmer-land">-</div>
-                        </div>
-                        <div class="farmer-detail-item">
-                            <div class="label">State</div>
-                            <div class="value" id="farmer-state">-</div>
-                        </div>
-                        <div class="farmer-detail-item">
-                            <div class="label">District</div>
-                            <div class="value" id="farmer-district">-</div>
-                        </div>
-                    </div>
-                </section>
+            <div class="tab-hint" id="tab-hint"></div>
 
-                <!-- Statistics Cards -->
-                <section class="stats-container">
-                    <div class="stat-box stat-eligible">
-                        <div class="stat-icon">📜</div>
-                        <h3 id="stat-eligible-count">0</h3>
-                        <p>Eligible Schemes</p>
-                    </div>
-                    <div class="stat-box stat-queries">
-                        <div class="stat-icon">💬</div>
-                        <h3 id="stat-queries-count">0</h3>
-                        <p>Queries Asked</p>
-                    </div>
-                    <div class="stat-box stat-benefits">
-                        <div class="stat-icon">💰</div>
-                        <h3 id="stat-benefits-count">0</h3>
-                        <p>Benefits Listed</p>
-                    </div>
-                    <div class="stat-box stat-score">
-                        <div class="stat-icon">📈</div>
-                        <h3 id="stat-profile-score">0%</h3>
-                        <p>Profile Score</p>
-                    </div>
-                </section>
-
-                <!-- Recommended Schemes Section -->
-                <section class="dashboard-section">
-                    <div class="section-header-row">
-                        <h2 class="section-title">✨ Recommended Schemes <span>For You</span></h2>
-                    </div>
-                    
-                    <!-- Recommended Schemes Grid -->
-                    <div class="scheme-grid" id="recommended-schemes-container">
-                        <!-- Skeleton Loader -->
-                        <div class="skeleton skeleton-card"></div>
-                        <div class="skeleton skeleton-card"></div>
-                        <div class="skeleton skeleton-card"></div>
-                    </div>
-                </section>
-
-                <!-- View All Schemes Section -->
-                <section class="dashboard-section">
-                    <div class="section-header-row">
-                        <h2 class="section-title">📚 Browse All Government Schemes</h2>
-                        <div class="search-filter-wrapper">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-                            </svg>
-                            <input type="text" class="search-input" id="search-schemes-input" placeholder="Search schemes by name or keywords..." oninput="filterAllSchemes()">
-                        </div>
-                    </div>
-                    
-                    <!-- All Schemes Grid -->
-                    <div class="scheme-grid" id="all-schemes-container">
-                        <div class="skeleton skeleton-card"></div>
-                        <div class="skeleton skeleton-card"></div>
-                        <div class="skeleton skeleton-card"></div>
-                    </div>
-                </section>
-
+            <div class="scheme-list" id="scheme-list" role="tabpanel" aria-live="polite">
+                <div class="skeleton-row"></div>
+                <div class="skeleton-row"></div>
+                <div class="skeleton-row"></div>
             </div>
+        </section>
+    </main>
 
-        </main>
+    <!-- Chat assistant -->
+    <button type="button" class="chat-launcher" id="chatbot-collapsed" onclick="toggleChatWindow(true)" aria-controls="chatbot-window" aria-expanded="false">
+        <span data-icon="chat" data-icon-size="22"></span>
+        <span data-i18n="chat.launch">Ask a question</span>
+    </button>
 
-        <!-- Floating AI Chatbot Widget -->
-        <div class="chatbot-wrapper" id="chatbot-wrapper">
-            <!-- Collapsed state bubble -->
-            <div class="chatbot-collapsed" id="chatbot-collapsed" onclick="toggleChatWindow(true)">
-                <div class="chatbot-hover-badge">Hi Farmer 👋 How can I help you?</div>
-                <button class="chatbot-trigger-btn">💬</button>
+    <section class="chat-panel" id="chatbot-window" aria-labelledby="chat-title" style="display: none;">
+        <div class="chat-head">
+            <div>
+                <h2 id="chat-title" data-i18n="chat.title">Jeevandhara assistant</h2>
+                <p data-i18n="chat.subtitle">Answers in Hindi or English</p>
             </div>
-            
-            <!-- Open state window -->
-            <div class="chatbot-window" id="chatbot-window" style="display: none;">
-                <!-- Header -->
-                <div class="chatbot-header">
-                    <div class="chatbot-header-info">
-                        <div class="chatbot-header-avatar">🤖</div>
-                        <div class="chatbot-header-title">
-                            <h4>Jeevandhara AI</h4>
-                            <span>Online</span>
-                        </div>
-                    </div>
-                    <div class="chatbot-header-actions">
-                        <button class="chatbot-header-action-btn" onclick="toggleChatWindow(false)" title="Minimize">➖</button>
-                        <button class="chatbot-header-action-btn" onclick="toggleChatWindow(false)" title="Close" style="font-weight: bold;">✕</button>
-                    </div>
-                </div>
-                
-                <!-- Chat History -->
-                <div class="chatbot-messages" id="chatbot-messages">
-                </div>
-                
-                <!-- Input bar -->
-                <form id="chatbot-form" onsubmit="event.preventDefault(); sendChatMessage();" class="chatbot-input-bar">
-                    <input type="text" id="chatbot-input-field" class="chatbot-input" placeholder="Type your question..." autocomplete="off">
-                    <button type="submit" class="chatbot-send-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-                        </svg>
-                    </button>
-                </form>
+            <div class="chat-head-actions">
+                <button type="button" class="icon-btn" id="chat-clear-btn" onclick="clearChat()" data-i18n-title="chat.clear"><span data-icon="trash" data-icon-size="18"></span></button>
+                <button type="button" class="icon-btn" id="chat-close-btn" onclick="toggleChatWindow(false)" data-i18n-title="chat.close"><span data-icon="close" data-icon-size="18"></span></button>
             </div>
         </div>
 
+        <div class="chatbot-messages" id="chatbot-messages" aria-live="polite"></div>
+
+        <form id="chatbot-form" onsubmit="event.preventDefault(); sendChatMessage();" class="chatbot-input-bar">
+            <input type="text" id="chatbot-input-field" class="chatbot-input" data-i18n-placeholder="chat.placeholder" autocomplete="off">
+            <button type="button" class="chatbot-mic-btn" id="chatbot-mic-btn" onclick="toggleVoiceInput()" data-i18n-title="chat.mic" hidden><span data-icon="mic" data-icon-size="20"></span></button>
+            <button type="submit" class="chatbot-send-btn" data-i18n-title="chat.send"><span data-icon="send" data-icon-size="20"></span></button>
+        </form>
+    </section>
+
+    <!-- Edit profile -->
+    <div class="modal-overlay" id="profile-modal" hidden>
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+            <div class="modal-header">
+                <h2 id="profile-modal-title" data-i18n="modal.title">Edit profile</h2>
+                <button type="button" class="icon-btn" onclick="closeProfileModal()" data-i18n-title="chat.close"><span data-icon="close" data-icon-size="18"></span></button>
+            </div>
+            <p class="modal-sub" data-i18n="modal.subtitle">Your scheme matches are recalculated as soon as you save.</p>
+
+            <form id="profile-form" onsubmit="event.preventDefault(); saveProfile();" novalidate>
+                <div class="grid-2">
+                    <div class="field">
+                        <label for="edit-name" data-i18n="field.name">Full name</label>
+                        <input type="text" id="edit-name" class="input" autocomplete="name" required>
+                    </div>
+                    <div class="field">
+                        <label for="edit-age" data-i18n="field.age">Age</label>
+                        <input type="number" id="edit-age" class="input" inputmode="numeric" min="1" max="120" required>
+                    </div>
+                    <div class="field">
+                        <label for="edit-land" data-i18n="field.land">Land (acres)</label>
+                        <input type="number" id="edit-land" class="input" inputmode="decimal" min="0" step="0.01" required>
+                    </div>
+                    <div class="field">
+                        <label for="edit-income" data-i18n="field.income">Yearly income (₹)</label>
+                        <input type="number" id="edit-income" class="input" inputmode="numeric" min="0" required>
+                    </div>
+                    <div class="field">
+                        <label for="edit-state" data-i18n="field.state">State</label>
+                        <input type="text" id="edit-state" class="input" required>
+                    </div>
+                    <div class="field">
+                        <label for="edit-district" data-i18n="field.district">District</label>
+                        <input type="text" id="edit-district" class="input" required>
+                    </div>
+                </div>
+
+                <details class="fieldset more-questions" id="edit-questions-block" open>
+                    <summary data-i18n="q.title">A few more questions (optional)</summary>
+                    <p class="hint" data-i18n="q.hint">These confirm schemes like PM-KISAN, APY and Jan-Dhan. Choose “Not sure” if you don't know.</p>
+                    <div class="grid-2" id="edit-questions"></div>
+                </details>
+
+                <p id="profile-form-msg" class="form-error" role="alert"></p>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-quiet" onclick="closeProfileModal()" data-i18n="modal.cancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="profile-save-btn"><span data-i18n="modal.save">Save changes</span></button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <!-- Notification Toast Container -->
     <div class="toast-container" id="toast-container"></div>
 
+    <script src="common.js"></script>
+    <script src="i18n.js"></script>
+    <script src="voice.js"></script>
     <script src="dashboard.js"></script>
 </body>
 </html>

@@ -3,128 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheme Details - Jeevandhara</title>
+    <meta name="theme-color" content="#1E6A3A">
+    <title>Scheme details - Jeevandhara</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-title-key="page.scheme">
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to main content</a>
 
-    <!-- Header / Nav -->
-    <header class="dashboard-header">
-        <div class="header-brand">
-            <span style="font-size: 24px;">🌾</span>
-            <span>Jeevandhara</span>
-        </div>
-        <div class="header-actions">
-            <button class="theme-switch" id="theme-btn" aria-label="Toggle Theme">
-                🌙
-            </button>
-            <a href="dashboard.html" class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px;">
-                Dashboard
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html" id="brand-link">
+                <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <rect width="32" height="32" rx="9" fill="#1E6A3A"/>
+                    <path d="M16 25.5V15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M16 16.5c0-4.6-3.2-7.5-8.5-7.5 0 4.6 3.2 7.5 8.5 7.5z" fill="#E3A008"/>
+                    <path d="M16 14.5c0-3.9 2.7-6.5 7.5-6.5 0 3.9-2.7 6.5-7.5 6.5z" fill="#fff"/>
+                </svg>
+                <span>Jeevandhara</span>
             </a>
+            <div class="header-actions">
+                <button class="lang-switch" id="lang-btn" type="button">हिंदी</button>
+                <button class="icon-btn" id="theme-btn" type="button" data-i18n-title="theme.toggle"></button>
+                <a href="dashboard.html" class="btn btn-ghost btn-sm nav-home-link">Dashboard</a>
+            </div>
         </div>
     </header>
 
-    <!-- Scheme Hero Section -->
-    <section class="scheme-hero">
-        <div class="scheme-hero-content">
-            <span class="scheme-dept-tag" id="scheme-dept">Loading Department...</span>
-            <h1 id="scheme-title">Loading Scheme Name...</h1>
-            <p class="scheme-hero-tagline" id="scheme-tagline">Loading tagline description...</p>
-            
-            <div class="scheme-hero-meta">
-                <div class="scheme-hero-meta-item">
-                    <span>📅</span>
-                    <span id="scheme-year">Launch Year: -</span>
-                </div>
-                <div class="scheme-hero-meta-item">
-                    <span>🏛️</span>
-                    <span id="scheme-implementor">Implemented By: -</span>
-                </div>
-            </div>
+    <main id="main" class="container scheme-page">
+        <a href="dashboard.html" class="back-link nav-back-link"><span data-icon="back" data-icon-size="16"></span><span class="back-text">Back to dashboard</span></a>
+
+        <header class="scheme-hero">
+            <span class="scheme-icon" id="scheme-hero-icon"></span>
+            <h1 id="scheme-title" data-i18n="scheme.loading_title">Loading scheme...</h1>
+            <p class="scheme-tagline" id="scheme-tagline"></p>
+            <dl class="scheme-facts">
+                <div><dt data-i18n="fact.started">Started</dt><dd id="scheme-year">-</dd></div>
+                <div><dt data-i18n="fact.run_by">Run by</dt><dd id="scheme-implementor">-</dd></div>
+                <div><dt data-i18n="fact.department">Department</dt><dd id="scheme-dept">-</dd></div>
+            </dl>
+        </header>
+
+        <div class="scheme-layout">
+            <aside class="scheme-aside" aria-labelledby="status-heading">
+                <section class="panel status-card" id="eligibility-card">
+                    <h2 id="status-heading" data-i18n="scheme.your_eligibility">Your status</h2>
+                    <div id="eligibility-body"></div>
+
+                    <div class="aside-actions" id="aside-actions" hidden>
+                        <button type="button" class="btn btn-quiet save-scheme-btn" id="save-scheme-btn"></button>
+                        <select class="status-select" id="scheme-status-select" hidden></select>
+                        <div class="aside-docs" id="aside-docs" hidden>
+                            <span id="aside-docs-text"></span>
+                            <div class="progress" aria-hidden="true"><div class="progress-bar" id="aside-docs-bar"></div></div>
+                            <a href="#documents" data-i18n="scheme.docs_link">Go to the checklist</a>
+                        </div>
+                        <a href="#" class="btn btn-primary" id="ask-ai-link" hidden>
+                            <span data-icon="chat" data-icon-size="18"></span>
+                            <span data-i18n="scheme.ask_ai">Ask about this scheme</span>
+                        </a>
+                    </div>
+                    <a href="#" target="_blank" rel="noopener noreferrer" id="scheme-web-link" class="btn btn-ghost btn-block" style="margin-top: 10px;">
+                        <span data-i18n="scheme.website">Official website</span>
+                        <span data-icon="external" data-icon-size="16"></span>
+                    </a>
+                </section>
+            </aside>
+
+            <article class="scheme-content">
+                <p class="english-note" id="english-note" hidden></p>
+
+                <section class="content-section">
+                    <h2 data-i18n="scheme.overview">About this scheme</h2>
+                    <p id="scheme-overview"></p>
+                </section>
+
+                <section class="content-section">
+                    <h2 data-i18n="scheme.benefits">Benefits</h2>
+                    <div id="scheme-benefits-money"></div>
+                    <ul class="list-checklist" id="scheme-benefits-list"></ul>
+                </section>
+
+                <section class="content-section">
+                    <h2 data-i18n="scheme.eligibility">Who can apply</h2>
+                    <div class="limit-chips" id="scheme-eligibility-limits"></div>
+                    <ul class="list-checklist" id="scheme-eligibility-list"></ul>
+                </section>
+
+                <section class="content-section" id="documents">
+                    <div class="section-title-row">
+                        <h2 data-i18n="scheme.documents">Documents you need</h2>
+                        <span class="docs-progress-text" id="docs-progress-text" hidden></span>
+                    </div>
+                    <p class="hint" id="docs-hint" hidden data-i18n="scheme.docs_hint">Tick each document when you have it. Your progress is saved.</p>
+                    <div class="progress docs-progress" id="docs-progress" hidden><div class="progress-bar" id="docs-progress-bar"></div></div>
+                    <ul class="list-checklist docs-list" id="scheme-documents-list"></ul>
+                </section>
+
+                <section class="content-section">
+                    <h2 data-i18n="scheme.process">How to apply</h2>
+                    <ol class="list-numbered" id="scheme-process-list"></ol>
+                </section>
+
+                <section class="content-section">
+                    <h2 data-i18n="scheme.dates">Important dates</h2>
+                    <p id="scheme-dates"></p>
+                </section>
+
+                <section class="content-section">
+                    <h2 data-i18n="scheme.faqs">Common questions</h2>
+                    <div class="faq-list" id="scheme-faq-container"></div>
+                </section>
+            </article>
         </div>
-    </section>
-
-    <!-- Scheme Content Details -->
-    <main class="scheme-detail-container">
-        
-        <!-- Navigation Row -->
-        <div class="detail-nav-bar">
-            <a href="dashboard.html" class="btn btn-secondary">
-                ← Back to Dashboard
-            </a>
-            <a href="#" target="_blank" id="scheme-web-link" class="btn btn-primary">
-                <span>Visit Official Website</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/>
-                </svg>
-            </a>
-        </div>
-
-        <!-- Section 1: Overview -->
-        <section class="scheme-section-card">
-            <h2>📝 Overview</h2>
-            <p id="scheme-overview" style="font-size: 15px; color: var(--text-main); line-height: 1.7;">Loading overview details...</p>
-        </section>
-
-        <!-- Section 2: Benefits & Subsidies -->
-        <section class="scheme-section-card">
-            <h2>💰 Benefits & Subsidies</h2>
-            <div id="scheme-benefits-money" style="margin-bottom: 20px; font-weight: 500; font-size: 15px;"></div>
-            <ul class="list-checklist" id="scheme-benefits-list">
-                <!-- Dynamic benefits list -->
-            </ul>
-        </section>
-
-        <!-- Section 3: Eligibility Rules -->
-        <section class="scheme-section-card">
-            <h2>👨‍🌾 Eligibility Criteria</h2>
-            <div id="scheme-eligibility-limits" style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
-                <!-- Dynamic age, land limits info badges -->
-            </div>
-            <ul class="list-checklist" id="scheme-eligibility-list">
-                <!-- Dynamic eligibility list -->
-            </ul>
-        </section>
-
-        <!-- Section 4: Required Documents -->
-        <section class="scheme-section-card">
-            <h2>📂 Required Documents Checklist</h2>
-            <ul class="list-checklist" id="scheme-documents-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <!-- Dynamic documents list -->
-            </ul>
-        </section>
-
-        <!-- Section 5: Application Process -->
-        <section class="scheme-section-card">
-            <h2>🚜 Step-by-Step Application Process</h2>
-            <ol class="list-numbered" id="scheme-process-list">
-                <!-- Dynamic application process steps -->
-            </ol>
-        </section>
-
-        <!-- Section 6: Important Dates -->
-        <section class="scheme-section-card">
-            <h2>📅 Important Dates & Deadlines</h2>
-            <p id="scheme-dates" style="font-size: 15px; color: var(--text-main);">Loading timelines...</p>
-        </section>
-
-        <!-- Section 7: FAQs -->
-        <section class="scheme-section-card">
-            <h2>❓ Frequently Asked Questions</h2>
-            <div class="faq-list" id="scheme-faq-container">
-                <!-- Dynamic FAQs list -->
-            </div>
-        </section>
-
-        <!-- Bottom Navigation -->
-        <div style="text-align: center; margin-top: 20px; margin-bottom: 40px;">
-            <a href="dashboard.html" class="btn btn-secondary" style="padding: 12px 30px;">
-                ← Back to Dashboard
-            </a>
-        </div>
-
     </main>
 
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p class="footer-note" data-i18n="footer.note">Jeevandhara is an independent guide to central government schemes. It is not an official government website, so always confirm details on the scheme's official portal.</p>
+            <p data-i18n-html="footer.kcc">Kisan Call Centre: <a href="tel:18001801551">1800-180-1551</a> (free, 6 AM to 10 PM, every day)</p>
+        </div>
+    </footer>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="common.js"></script>
+    <script src="i18n.js"></script>
     <script src="scheme.js"></script>
 </body>
 </html>

@@ -3,99 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Login - Jeevandhara</title>
+    <meta name="theme-color" content="#1E6A3A">
+    <title>Log in - Jeevandhara</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-title-key="page.login">
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to main content</a>
 
-    <div class="split-layout">
-        
-        <!-- Left panel layout -->
-        <div class="split-left">
-            <div class="left-brand">
-                <svg viewBox="0 0 24 24" width="24" height="24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="index.html">
+                <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                    <rect width="32" height="32" rx="9" fill="#1E6A3A"/>
+                    <path d="M16 25.5V15" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
+                    <path d="M16 16.5c0-4.6-3.2-7.5-8.5-7.5 0 4.6 3.2 7.5 8.5 7.5z" fill="#E3A008"/>
+                    <path d="M16 14.5c0-3.9 2.7-6.5 7.5-6.5 0 3.9-2.7 6.5-7.5 6.5z" fill="#fff"/>
                 </svg>
-                Jeevandhara
+                <span>Jeevandhara</span>
+            </a>
+            <div class="header-actions">
+                <button class="lang-switch" id="lang-btn" type="button">हिंदी</button>
+                <button class="icon-btn" id="theme-btn" type="button" data-i18n-title="theme.toggle"></button>
             </div>
-            
-            <div class="left-content">
-                <h1>Access Your Agriculture Dashboard</h1>
-                <p>Log in to view customized schemes matching your land holdings, get detailed updates on your benefits, and query the AI Assistant with instant speech or text search.</p>
-                
-                <div class="left-features-list">
-                    <div class="left-feature-item">
-                        <div class="left-feature-icon">⚡</div>
-                        <div class="left-feature-text">
-                            <h3>Real-Time Matching</h3>
-                            <p>Instantly screens agricultural programs as soon as you connect.</p>
-                        </div>
-                    </div>
-                    <div class="left-feature-item">
-                        <div class="left-feature-icon">💬</div>
-                        <div class="left-feature-text">
-                            <h3>Farming AI Assistant</h3>
-                            <p>Ask anything about subsidies, documents, or seed credits.</p>
-                        </div>
+        </div>
+    </header>
+
+    <main id="main" class="auth-main">
+        <div class="panel auth-card">
+            <h1 data-i18n="login.title">Log in</h1>
+            <p class="muted" data-i18n="login.subtitle">Use the username and password you registered with.</p>
+
+            <form onsubmit="event.preventDefault(); login();" novalidate>
+                <div class="field">
+                    <label for="username" data-i18n="field.username">Username</label>
+                    <input type="text" id="username" class="input" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+                </div>
+
+                <div class="field">
+                    <label for="password" data-i18n="field.password">Password</label>
+                    <div class="input-with-action">
+                        <input type="password" id="password" class="input" autocomplete="current-password" required>
+                        <button type="button" class="reveal-btn" data-reveal="password">Show</button>
                     </div>
                 </div>
-            </div>
-            
-            <div class="left-footer">
-                Ministry of Agriculture Nodal Initiative &copy; 2026.
-            </div>
-        </div>
-        
-        <!-- Right panel form -->
-        <div class="split-right">
-            <div class="right-header">
-                <button class="theme-switch" id="theme-btn" aria-label="Toggle Theme">
-                    🌙
+
+                <p id="msg" class="form-error" role="alert"></p>
+
+                <button type="submit" id="submit-btn" class="btn btn-primary btn-lg btn-block">
+                    <span data-i18n="login.submit">Log in</span>
                 </button>
-            </div>
-            
-            <div class="right-content auth-container">
-                <h2 class="auth-card-title">Farmer Login</h2>
-                <p class="auth-card-sub">Please enter your credentials to access the Jeevandhara platform.</p>
-                
-                <form onsubmit="event.preventDefault(); login();">
-                    
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-container">
-                            <span class="input-icon">👤</span>
-                            <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
-                        </div>
-                    </div>
+            </form>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-container">
-                            <span class="input-icon">🔒</span>
-                            <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
-                        </div>
-                    </div>
-
-                    <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-                        <span>Sign In</span>
-                    </button>
-                </form>
-                
-                <p class="auth-footer-text">Don't have an account yet? <a href="register.html">Register Here</a></p>
-                <div id="msg" style="color: var(--danger); text-align: center; margin-top: 15px; font-weight: 500;"></div>
-            </div>
-            
-            <div class="right-footer-links" style="left: 80px; right: 80px;">
-                <a href="index.html">← Back to Home</a>
-                <a href="#help">Get Help</a>
-            </div>
+            <p class="auth-switch" data-i18n-html="login.no_account">New to Jeevandhara? <a href="register.html">Create a free account</a></p>
         </div>
-        
-    </div>
 
-    <!-- Toast container for notifications -->
+        <p class="auth-help" data-i18n-html="login.help">Need help? Read the <a href="help.html#help">help page</a> or call the Kisan Call Centre on <a href="tel:18001801551">1800-180-1551</a>.</p>
+    </main>
+
     <div class="toast-container" id="toast-container"></div>
 
+    <script src="common.js"></script>
+    <script src="i18n.js"></script>
     <script src="login.js"></script>
 </body>
 </html>

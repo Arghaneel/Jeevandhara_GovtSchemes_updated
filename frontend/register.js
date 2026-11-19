@@ -1,53 +1,35 @@
+// Registration page. Theme, language, toasts and API helpers come from common.js / i18n.js.
+
+if (Session.userId) {
+    window.location.replace("dashboard.html");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Theme switching logic
-    const themeBtn = document.getElementById("theme-btn");
-    const currentTheme = localStorage.getItem("theme") || "light";
-    
-    if (currentTheme === "dark") {
-        document.body.classList.add("dark-mode");
-        themeBtn.textContent = "☀️";
-    } else {
-        document.body.classList.remove("dark-mode");
-        themeBtn.textContent = "🌙";
+    buildProfileQuestions(document.getElementById("reg-questions"), "reg-");
+
+    // Carry over the age, land and income typed into the home page check.
+    try {
+        const quick = JSON.parse(sessionStorage.getItem("jeevandhara_quickcheck") || "null");
+        if (quick) {
+            if (quick.age) document.getElementById("age").value = quick.age;
+            if (quick.land_size !== undefined) document.getElementById("land_size").value = quick.land_size;
+            if (quick.income !== undefined) document.getElementById("income").value = quick.income;
+        }
+    } catch (error) {
+        /* ignore */
     }
-    
-    themeBtn.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        const theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
-        localStorage.setItem("theme", theme);
-        themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+
+    // Clear the error mark as soon as a field is edited.
+    document.getElementById("register-form").addEventListener("input", (event) => {
+        event.target.removeAttribute("aria-invalid");
     });
 });
 
-// Helper function to show toasts
-function showToast(message, type = "info") {
-    const container = document.getElementById("toast-container");
-    const toast = document.createElement("div");
-    toast.className = `toast toast-${type}`;
-    
-    let icon = "ℹ️";
-    if (type === "success") icon = "✅";
-    if (type === "error") icon = "❌";
-    
-    toast.innerHTML = `
-        <span class="toast-icon">${icon}</span>
-        <span class="toast-message">${message}</span>
-    `;
-    
-    container.appendChild(toast);
-    
-    // Automatically remove toast after 3 seconds
-    setTimeout(() => {
-        toast.style.animation = "fadeSlideUp 0.3s reverse forwards";
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
 async function register() {
     const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const password = document.getElementById("password").value;
     const name = document.getElementById("name").value.trim();
-    const age = parseInt(document.getElementById("age").value);
+    const age = parseInt(document.getElementById("age").value, 10);
     const income = parseFloat(document.getElementById("income").value);
     const landSize = parseFloat(document.getElementById("land_size").value);
     const state = document.getElementById("state").value.trim();
@@ -55,82 +37,67 @@ async function register() {
     const msgElement = document.getElementById("msg");
     const submitBtn = document.getElementById("submit-btn");
 
-    msgElement.innerHTML = "";
+    msgElement.textContent = "";
 
-    // Front-end validations
-    if (!username || !password || !name || isNaN(age) || isNaN(income) || isNaN(landSize) || !state || !district) {
-        showToast("Please fill all details correctly.", "error");
-        return;
-    }
+    const fail = (message, fieldId) => {
+        showToast(message, "error");
+        msgElement.textContent = message;
+        if (fieldId) {
+            const field = document.getElementById(fieldId);
+            field.setAttribute("aria-invalid", "true");
+            field.focus();
+        }
+    };
 
-    if (age <= 0 || age > 120) {
-        showToast("Please enter a valid age.", "error");
-        return;
-    }
+    const required = { name, age: isNaN(age) ? "" : age, land_size: isNaN(landSize) ? "" : landSize,
+                       income: isNaN(income) ? "" : income, state, district, username, password };
+    const firstEmpty = Object.keys(required).find((id) => required[id] === "" || required[id] === undefined);
+    if (firstEmpty) return fail(t("register.fill_all"), firstEmpty);
+    if (age < 1 || age > 120) return fail(t("register.bad_age"), "age");
+    if (landSize < 0) return fail(t("register.bad_land"), "land_size");
+    if (income < 0) return fail(t("register.bad_income"), "income");
+    if (username.length < 3) return fail(t("register.username_short"), "username");
+    if (password.length < 6) return fail(t("register.password_short"), "password");
 
-    if (income < 0) {
-        showToast("Income cannot be negative.", "error");
-        return;
-    }
-
-    if (landSize < 0) {
-        showToast("Land size cannot be negative.", "error");
-        return;
-    }
-
-    // Set loading state on button
     submitBtn.disabled = true;
     const originalBtnHTML = submitBtn.innerHTML;
-    submitBtn.innerHTML = `<span class="spinner"></span> <span>Registering...</span>`;
+    submitBtn.innerHTML = `<span class="spinner"></span> <span>${escapeHTML(t("register.registering"))}</span>`;
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/register", {
+        await apiRequest("/register", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                name: name,
-                age: age,
-                income: income,
+            body: {
+                username,
+                password,
+                name,
+                age,
+                income,
                 land_size: landSize,
-                state: state,
-                district: district
-            })
+                state,
+                district,
+                ...readProfileQuestions("reg-"),
+            },
         });
 
-        const result = await response.json();
+        showToast(t("register.done"), "success");
 
-        if (result.status === "success") {
-            showToast("Registration successful!", "success");
-            
-            // Trigger checkmark animation and hide form panel
-            document.getElementById("register-form-panel").style.display = "none";
-            const successOverlay = document.getElementById("success-overlay");
-            successOverlay.style.display = "block";
-            
-            // Perform CSS checkmark path animation trigger
-            const path = successOverlay.querySelector("path");
-            if (path) {
-                path.style.animation = "dash 0.8s ease-in-out forwards";
-            }
+        document.getElementById("register-form-panel").style.display = "none";
+        const successOverlay = document.getElementById("success-overlay");
+        successOverlay.style.display = "block";
+        const path = successOverlay.querySelector("path");
+        if (path) path.style.animation = "dash 0.8s ease-in-out forwards";
 
-            // Redirect to Login Page
-            setTimeout(() => {
-                window.location.href = "login.html";
-            }, 1800);
-        } else {
-            showToast(result.message || "Registration failed. Username might already exist.", "error");
-            msgElement.innerHTML = result.message || "Registration failed. Try a different username.";
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnHTML;
-        }
+        sessionStorage.setItem("jeevandhara_prefill_username", username);
+        sessionStorage.removeItem("jeevandhara_quickcheck");
+        flashMessage(t("register.flash"), "success");
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1800);
     } catch (error) {
         console.error("Registration error:", error);
-        showToast("Cannot connect to server. Ensure backend is running.", "error");
-        msgElement.innerHTML = "Server connection error. Please make sure the API is online.";
+        const message = error.status === 422 ? t("err.check_fields", { message: error.message }) : error.message;
+        fail(message || t("register.failed"), error.status === 409 ? "username" : null);
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnHTML;
     }
